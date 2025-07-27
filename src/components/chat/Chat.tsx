@@ -1,13 +1,11 @@
-// src/components/chat/Chat.tsx
+// src/components/chat/Chat.tsx (updated)
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { useChat } from '@ai-sdk/react';
-import { Input } from './Input';
-import { Message } from './Message';
+import { useChat } from 'ai/react'
 
-
-
+import { Message } from '@/components/chat/Message'
+import { Input } from '@/components/chat/Input'
 
 export function Chat() {
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
@@ -34,8 +32,16 @@ export function Chat() {
                 AI Search Assistant
               </h1>
               <p className="text-gray-600">
-                Ask me anything! I can search the web to find answers for you.
+                Ask me anything! I can search the web, read articles, and find videos.
               </p>
+              <div className="mt-4 text-sm text-gray-500">
+                <p>Try asking:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                  <li>"What are the latest AI news?"</li>
+                  <li>"Summarize this article: [URL]"</li>
+                  <li>"Show me cooking tutorial videos"</li>
+                </ul>
+              </div>
             </div>
           ) : (
             messages.map((message) => (
