@@ -9,6 +9,8 @@ import { parseToolCallXml, ToolCall } from '@/lib/ai/xml-parser'
 import { extractUrlContent } from '@/lib/tools/url-extract'
 import { searchVideos } from '@/lib/tools/video-search'
 import { toolSchemas } from '@/lib/search/search-schema'
+import { searchImages } from '@/lib/tools/image-search'
+
 
 interface ToolExecutionResult {
   toolCallDataAnnotation: any | null
@@ -44,6 +46,15 @@ export async function executeToolCall(
     })
     .join('\n')
 
+  const imageSearchSchemaString = Object.entries(toolSchemas.search_images.shape)
+  .map(([key, value]) => {
+    const description = (value as any).description || ''
+    const isOptional = value instanceof z.ZodOptional
+    return `- ${key}${isOptional ? ' (optional)' : ''}: ${description}`
+  })
+  .join('\n')
+
+
   // Generate tool selection using XML format
   const toolSelectionResponse = await generateText({
     model: google('gemini-2.0-flash'),
@@ -71,11 +82,14 @@ export async function executeToolCall(
             Video Search parameters:
             ${videoSearchSchemaString}
 
+            Image Search parameters:
+            ${imageSearchSchemaString}
+
             Examples:
             For web search: <tool>search</tool><parameters><query>latest AI news</query></parameters>
             For URL extraction: <tool>extract_url</tool><parameters><url>https://example.com/article</url></parameters>
             For video search: <tool>search_videos</tool><parameters><query>cooking tutorials</query><max_results>3</max_results></parameters>
-
+           For image search: <tool>search_images</tool><parameters><query>wildlife photos</query><max_results>3</max_results></parameters>
             If you don't need a tool, respond with </tool_call><tool></tool></tool_call>`,
     messages: coreMessages,
     temperature: 0.3
@@ -128,7 +142,16 @@ if (!toolCall || toolCall.tool === '') {
         toolCall.parameters?.max_results ?? 5
       )
       console.log('Video search results:', JSON.stringify(toolResults, null, 2))
-    } else {
+    } else if (toolCall.tool === 'search_images') {
+  console.log('Executing search_images tool with params:', toolCall.parameters)
+  toolResults = await searchImages(
+    toolCall.parameters?.query ?? '',
+    toolCall.parameters?.max_results ?? 5
+  )
+  console.log('Image search results:', JSON.stringify(toolResults, null, 2))
+    
+    
+ } else {
       console.log('Unknown tool requested:', toolCall.tool)
       toolResults = {
         error: 'Unknown tool',

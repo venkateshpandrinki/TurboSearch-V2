@@ -44,7 +44,22 @@ export function Message({ message }: MessageProps) {
               <details className="mt-1">
                 <summary className="cursor-pointer text-gray-600">Results</summary>
                 <div className="mt-1 p-2 bg-gray-50 rounded text-xs">
-                  {toolCall.toolName === 'search_videos' ? (
+                  {toolCall.toolName === 'search_images' ? (
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      {toolCall.result.images?.slice(0, 4).map((image: any, i: number) => (
+                        <div key={i} className="border rounded">
+                          <img 
+                            src={image.imageUrl} 
+                            alt={image.title || 'Search result'} 
+                            className="w-full h-32 object-cover rounded-t"
+                          />
+                          <div className="p-2 text-xs text-gray-600 line-clamp-2">
+                            {image.title}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : toolCall.toolName === 'search_videos' ? (
                     <div className="space-y-2">
                       {toolCall.result.videos?.slice(0, 3).map((video: any, i: number) => (
                         <div key={i} className="border-b border-gray-200 pb-2 last:border-0">

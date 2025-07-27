@@ -21,9 +21,19 @@ export const videoSearchSchema = z.object({
   max_results: z.number().min(1).max(10).default(5).optional().describe('Maximum number of videos to return (1-10)')
 })
 
+export const imageSearchSchema = z.object({
+  query: z.string().describe('The image search query'),
+  max_results: z.number().min(1).max(10).default(5).optional().describe('Maximum number of images to return (1-10)')
+})
+
+
 // Combined schema for XML parsing
 export const toolSchemas = {
   search: searchSchema,
   extract_url: extractUrlSchema,
-  search_videos: videoSearchSchema
+  search_videos: videoSearchSchema,
+  search_images: imageSearchSchema
 }
+
+
+
