@@ -1,65 +1,4 @@
-// 'use client';
-
-// import { Spinner } from '@/components/ui/spinner';
-// import { useChat } from '@ai-sdk/react';
-
-// export default function Page() {
-//   const { messages, input, handleInputChange, handleSubmit, status, stop } =
-//     useChat({});
-
-//   return (
-//     <>
-//       {messages.map(message => (
-//         <div key={message.id} style={{ marginBottom: '1rem', padding: '1rem', border: '1px solid #ccc' }}>
-//           <strong>{message.role === 'user' ? 'User: ' : 'AI: '}</strong>
-//           <div>{message.content}</div>
-          
-//           {/* Display tool calls */}
-//           {message.toolInvocations && message.toolInvocations.map((toolCall, index) => (
-//             <div key={index} style={{ marginTop: '0.5rem', padding: '0.5rem', backgroundColor: '#f5f5f5' }}>
-//               <strong>Tool: {toolCall.toolName}</strong>
-//               <details>
-//                 <summary>Arguments</summary>
-//                 <pre>{JSON.stringify(toolCall.args, null, 2)}</pre>
-//               </details>
-//               {'result' in toolCall && (toolCall as any).result && (
-//                 <details>
-//                   <summary>Result</summary>
-//                   <pre>{JSON.stringify((toolCall as any).result, null, 2)}</pre>
-//                 </details>
-//               )}
-//             </div>
-//           ))}
-//         </div>
-//       ))}
-
-//       {(status === 'submitted' || status === 'streaming') && (
-//         <div>
-//           {status === 'submitted' && <Spinner />}
-//           <button type="button" onClick={() => stop()}>
-//             Stop
-//           </button>
-//         </div>
-//       )}
-
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           name="prompt"
-//           value={input}
-//           onChange={handleInputChange}
-//           disabled={status !== 'ready'}
-//           style={{ width: '300px', padding: '0.5rem' }}
-//         />
-//         <button type="submit" disabled={status !== 'ready'}>
-//           Submit
-//         </button>
-//       </form>
-//     </>
-//   );
-// }
-
-
-// src/app/page.tsx
+import SignIn from '@/components/Signin'
 import Link from 'next/link'
 
 export default function Home() {
@@ -79,6 +18,8 @@ export default function Home() {
           Start Chatting
         </Link>
       </div>
+
+      <SignIn/>
     </div>
   )
 }

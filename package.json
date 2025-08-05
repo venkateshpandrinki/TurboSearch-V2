@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",
+    "@auth/prisma-adapter": "^2.10.0",
+    "@prisma/client": "^6.12.0",
     "@radix-ui/react-slot": "^1.2.3",
     "@tavily/core": "^0.5.10",
     "ai": "^4.3.19",
@@ -31,6 +33,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.2",
+    "prisma": "^6.12.0",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5",
     "typescript": "^5"
